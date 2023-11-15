@@ -18,11 +18,11 @@ def clear_entry():
     entry_var.set("")
 
 def create_button(window, text, row, col, command):
-    return tk.Button(window, text=text, padx=20, pady=20, font=('Arial', 14), command=command).grid(row=row, column=col)
+    return tk.Button(window, text=text, padx=10, pady=10, font=('Arial', 14), command=command).grid(row=row, column=col)
 
 # Create the main window
 window = tk.Tk()
-window.title("Simple Calculator")
+window.title("Nzeru Calculator")
 
 # Entry widget to display and edit the current expression
 entry_var = tk.StringVar()
