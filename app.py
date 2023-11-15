@@ -1,40 +1,56 @@
-# Graphical Calculator with Tkinker
 import tkinter as tk
-calculation =""
-def add_calculation(symbol):
-    global calculation
-    calculation += str(symbol)
-    text_result.delete(1.0, "end")
-    text_result.insert(1.0, calculation)
 
-def evaluate_calculation():
-    global calculation
-    try:
-        calculation = str(eval(calculation))
-        calculation - ""
-        text_result.delete(1.0, "end")
-        text_result.insert(1.0, calculation)
-    except:
-        clear_field()
-        text_result.insert(1.0 "Error")
-        pass
-def clear_field():
-    global calculation
-    calculation = ""
-    text_result.delete(1.0, "end")
-    pass
-# GUI Built
-root =tk.Tk()
-root.geometry("350x275")
+def on_click(button_text):
+    current_text = entry_var.get()
 
-text_result = tk.Text(root, height=2, width=16, font=("Arial", 24))
-text_result.grid(columnspan=5)
+    if button_text == "=":
+        try:
+            result = eval(current_text)
+            entry_var.set(result)
+        except Exception as e:
+            entry_var.set("Error")
+    elif button_text == "C":
+        clear_entry()
+    else:
+        entry_var.set(current_text + button_text)
 
-#creating buttons
-btn_1  = tk.Button(root, text="1", command=lambda: add_to_calculation(1), width=5, font="Arial", 14) 
-btn_1.grid(row=2, column=1)
-btn_2  = tk.Button(root, text="2", command=lambda: add_to_calculation(2), width=5, font="Arial", 14) 
-btn_2.grid(row=2, column=2)
+def clear_entry():
+    entry_var.set("")
 
+def create_button(window, text, row, col, command):
+    return tk.Button(window, text=text, padx=20, pady=20, font=('Arial', 14), command=command).grid(row=row, column=col)
 
-root.mainloop()
+# Create the main window
+window = tk.Tk()
+window.title("Simple Calculator")
+
+# Entry widget to display and edit the current expression
+entry_var = tk.StringVar()
+entry = tk.Entry(window, textvariable=entry_var, font=('Arial', 18), justify="right")
+entry.grid(row=0, column=0, columnspan=6)  # Adjusted columnspan to 6
+
+# Define the buttons
+buttons = [
+    '7', '8', '9', '/',
+    '4', '5', '6', '*',
+    '1', '2', '3', '-',
+    '0', '.', '=', '+',
+    '(', ')', 'sqrt', '**2', '**0.5'  # Added more buttons
+]
+
+# Add buttons to the grid
+row_val = 1
+col_val = 0
+
+for button_text in buttons:
+    create_button(window, button_text, row_val, col_val, lambda btn=button_text: on_click(btn))
+    col_val += 1
+    if col_val > 5:  # Adjusted the condition for a new row
+        col_val = 0
+        row_val += 1
+
+# Create a Clear button
+create_button(window, "C", row_val, col_val, clear_entry)
+
+# Run the Tkinter event loop
+window.mainloop()
