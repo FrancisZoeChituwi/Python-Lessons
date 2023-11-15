@@ -26,7 +26,7 @@ window.title("Nzeru Calculator")
 
 # Entry widget to display and edit the current expression
 entry_var = tk.StringVar()
-entry = tk.Entry(window, textvariable=entry_var, font=('Arial', 18), justify="right")
+entry = tk.Entry(window, textvariable=entry_var, font=('Arial', 18), justify="center") #Edited the alignment to center
 entry.grid(row=0, column=0, columnspan=6)  # Adjusted columnspan to 6
 
 # Define the buttons
